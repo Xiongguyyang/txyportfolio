@@ -1,24 +1,52 @@
-
+"use client";
+import { motion } from "framer-motion";
+import SectionHeading from "@/component/ui/SectionHeading";
+import SectionDivider from "@/component/ui/SectionDivider";
+import { EDUCATION_DATA } from "@/lib/data";
+import { stagger, fadeLeft } from "@/lib/variants";
 
 export default function Education() {
-    return (
-        <div id="education" className="pt-40">
-            <h1 className="text-center font-bold text-2xl">Education</h1>
-            <div className="flex justify-center gap-3">
-                <div className="bg-sky-500 text-lg p-5 rounded hover:bg-sky-400 hover:transition-opacity hover:shadow-lg shadow-yellow-200">
-                    <h1>Diploma Drgree-IT and Economices</h1>
-                    <h2>Comcenter College, Vientiane capital</h2>
-                    <h3>Currently studying expected graduation: 2027</h3>
-                </div>
-                <div className="bg-sky-500 text-lg p-5 rounded hover:bg-sky-400 hover:transition-opacity hover:shadow-lg shadow-yellow-200">
-                    <h1>High-School</h1>
-                    <h2>Lad huang high school, Xiengkhuang Province</h2>
-                    <h3>2013-2024</h3>
-                </div>
-            </div>
-            <div className="w-full flex justify-center">
-                <hr className="text-black-500 w-[500px] border-2 border-solid border-black- items-center text-center mt-30 font-bold"></hr>
-            </div>
+  return (
+    <section id="education" className="py-16 md:py-24 px-4 sm:px-6">
+      <SectionHeading title="Education" subtitle="my learning journey" />
+
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="max-w-2xl mx-auto relative"
+      >
+        {/* Vertical timeline line */}
+        <div className="absolute left-4 md:left-5 top-2 bottom-2 w-px bg-linear-to-b from-indigo-500 via-violet-400 to-transparent" />
+
+        <div className="space-y-8 md:space-y-10 pl-12 md:pl-16">
+          {EDUCATION_DATA.map((edu, i) => (
+            <motion.div key={i} variants={fadeLeft} className="relative">
+              {/* Timeline dot */}
+              <div
+                className={`absolute -left-9 md:-left-11 top-2 w-4 h-4 rounded-full border-2 border-indigo-500 transition-colors ${
+                  edu.current ? "bg-indigo-500" : "bg-white dark:bg-gray-900"
+                }`}
+              />
+
+              <div className="p-5 md:p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+                {edu.current && (
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-500 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 rounded-full mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                    Current
+                  </span>
+                )}
+                <h3 className="font-bold text-lg md:text-xl">{edu.degree}</h3>
+                <p className="text-base text-gray-500 dark:text-gray-400 mt-1">{edu.school}</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">{edu.period}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
-    )
+      </motion.div>
+
+      <SectionDivider />
+    </section>
+  );
 }

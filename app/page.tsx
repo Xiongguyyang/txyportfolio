@@ -1,40 +1,33 @@
 "use client";
+import { useEffect, useState } from "react";
+import Header from "@/component/header";
 import HomeSection from "@/component/homesection";
 import Project from "@/component/projectsection";
 import Education from "@/component/educationsection";
 import Skills from "@/component/skills";
-import { useEffect, useState } from "react";
-import Header from "@/component/header";
 
 export default function Home() {
-  // safe default for SSR; read persisted value on the client
   const [pagemode, setPagemode] = useState("light");
 
+  // Restore persisted preference on mount
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("pagemode");
-      if (stored) setPagemode(stored);
-    }
+    const stored = localStorage.getItem("pagemode");
+    if (stored) setPagemode(stored);
   }, []);
 
-  // persist changes back to localStorage on the client
+  // Sync localStorage + toggle Tailwind dark class on <html>
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("pagemode", pagemode);
-    }
+    localStorage.setItem("pagemode", pagemode);
+    document.documentElement.classList.toggle("dark", pagemode === "dark");
   }, [pagemode]);
 
   return (
-    <div style={pagemode === "dark" ? { backgroundColor: "#141414", color: "#ededed" } :
-      { backgroundColor: "#ffffff", color: "#171717" }}
-      className={"flex justify-center border-0 flex-col"}>
-      <div className="flex flex-col gap-10 border-0" >
-        <Header pagemode={pagemode} setPagemode={setPagemode} />
-        <HomeSection />
-        <Project />
-        <Education />
-        <Skills pagemode={pagemode} setPagemode={setPagemode} />
-      </div>
+    <div className="min-h-screen bg-white dark:bg-[#0d0d0d] text-gray-900 dark:text-gray-100 transition-colors duration-300">
+      <Header pagemode={pagemode} setPagemode={setPagemode} />
+      <HomeSection />
+      <Project />
+      <Education />
+      <Skills />
     </div>
   );
 }
