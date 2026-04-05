@@ -8,14 +8,11 @@ import { AiOutlineDingding } from "react-icons/ai";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/data";
+import { BsFire } from "react-icons/bs";
+import { useTheme } from "@/component/ThemeProvider";
 
-export default function Header({
-  pagemode,
-  setPagemode,
-}: {
-  pagemode: string;
-  setPagemode: (v: string) => void;
-}) {
+export default function Header() {
+  const { pagemode, setPagemode } = useTheme();
   const [contactOpen, setContactOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -45,18 +42,17 @@ export default function Header({
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`sticky top-0 z-50 h-[60px] w-full flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${
-          scrolled
+        className={`sticky top-0 z-50 h-[60px] w-full flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${scrolled
             ? "backdrop-blur-md shadow-lg bg-white/80 dark:bg-gray-900/90 dark:shadow-black/40"
             : "bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800"
-        }`}
+          }`}
       >
         {/* Logo */}
         <motion.div
           whileHover={{ rotate: 15, scale: 1.1 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <AiOutlineDingding size={40} className="text-indigo-500" />
+          <BsFire size={40} className="text-accent" />
         </motion.div>
 
         {/* Desktop nav */}
@@ -66,18 +62,18 @@ export default function Header({
               key={targetId}
               onClick={() => scrollTo(targetId)}
               whileHover={{ y: -2 }}
-              className="text-base font-medium relative group text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              className="text-base font-medium relative group text-black dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
             >
               {label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-indigo-500 rounded-full group-hover:w-full transition-all duration-300" />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent rounded-full group-hover:w-full transition-all duration-300" />
             </motion.button>
           ))}
           <Link
             href="/designpage"
-            className="text-base font-medium relative group text-indigo-500 hover:text-indigo-400 transition-colors"
+            className="text-base font-medium relative group text-accent hover:text-accent-light transition-colors"
           >
             Design
-            <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-indigo-400 rounded-full group-hover:w-full transition-all duration-300" />
+            <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent-light rounded-full group-hover:w-full transition-all duration-300" />
           </Link>
         </nav>
 
@@ -97,7 +93,7 @@ export default function Header({
             onClick={() => setContactOpen((v) => !v)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-4 py-1.5 rounded-full text-base font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-200 dark:shadow-none"
+            className="px-4 py-1.5 rounded-full text-base font-semibold bg-accent-dark text-white hover:bg-accent-darker transition-colors shadow-md shadow-indigo-200 dark:shadow-none"
           >
             Contact
           </motion.button>
@@ -117,7 +113,7 @@ export default function Header({
           <button
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 rounded-lg text-black dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             {mobileOpen ? <FiX size={22} /> : <FiMenu size={22} />}
           </button>
@@ -141,7 +137,7 @@ export default function Header({
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className="absolute top-[68px] right-6 z-50 p-4 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
               >
-                <p className="text-sm text-center mb-3 text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">
+                <p className="text-sm text-center mb-3 text-black dark:text-gray-400 font-medium tracking-wide uppercase">
                   Scan to connect
                 </p>
                 <Image
@@ -172,7 +168,7 @@ export default function Header({
                 <button
                   key={targetId}
                   onClick={() => scrollTo(targetId)}
-                  className="text-left text-lg font-medium py-3 border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                  className="text-left text-lg font-medium py-3 border-b border-gray-100 dark:border-gray-800 text-black dark:text-gray-200 hover:text-accent dark:hover:text-accent-light transition-colors"
                 >
                   {label}
                 </button>
@@ -180,13 +176,13 @@ export default function Header({
               <Link
                 href="/designpage"
                 onClick={() => setMobileOpen(false)}
-                className="text-lg font-medium py-3 border-b border-gray-100 dark:border-gray-800 text-indigo-500 hover:text-indigo-400 transition-colors"
+                className="text-lg font-medium py-3 border-b border-gray-100 dark:border-gray-800 text-accent hover:text-accent-light transition-colors"
               >
                 Design
               </Link>
               <button
                 onClick={() => { setMobileOpen(false); setContactOpen(true); }}
-                className="mt-2 w-full py-2.5 rounded-full text-base font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+                className="mt-2 w-full py-2.5 rounded-full text-base font-semibold bg-accent-dark text-white hover:bg-accent-darker transition-colors"
               >
                 Contact
               </button>

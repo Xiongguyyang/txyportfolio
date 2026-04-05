@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, EB_Garamond } from "next/font/google";
 import "./globals.css";
-import Header from "@/component/header";
+import { ThemeProvider } from "@/component/ThemeProvider";
 
 const ebGaramond = EB_Garamond({
   subsets: ['latin'],
@@ -27,11 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${ebGaramond.variable} antialiased`}
-       >
-       
-        {children}
+      <body className={`${ebGaramond.variable} antialiased`}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

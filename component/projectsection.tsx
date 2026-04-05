@@ -71,9 +71,8 @@ export default function Project() {
                 key={i}
                 onClick={() => setCurrent(i)}
                 aria-label={`Go to slide ${i + 1}`}
-                className={`rounded-full transition-all duration-300 ${
-                  i === current ? "w-5 h-2 bg-white" : "w-2 h-2 bg-white/50"
-                }`}
+                className={`rounded-full transition-all duration-300 ${i === current ? "w-5 h-2 bg-white" : "w-2 h-2 bg-white/50"
+                  }`}
               />
             ))}
           </div>
@@ -93,23 +92,23 @@ export default function Project() {
               href="https://www.todolifetask.xyz/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 mt-1 text-indigo-500 hover:text-indigo-400 text-base font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 mt-1 text-accent hover:text-accent-light text-base font-medium transition-colors"
             >
               Visit live project <FiExternalLink size={16} />
             </a>
           </div>
 
           <div>
-            <p className="text-sm tracking-widest uppercase text-gray-500 dark:text-gray-400 mb-3 font-semibold">
+            <p className="text-sm tracking-widest uppercase text-black dark:text-gray-400 mb-3 font-semibold">
               Features
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
               {PROJECT_FEATURES.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-2 text-base text-gray-700 dark:text-gray-300"
+                  className="flex items-center gap-2 text-base text-black dark:text-gray-300"
                 >
-                  <span className="w-2 h-2 rounded-full bg-indigo-400 shrink-0" />
+                  <span className="w-2 h-2 rounded-full bg-accent-light shrink-0" />
                   {f}
                 </li>
               ))}

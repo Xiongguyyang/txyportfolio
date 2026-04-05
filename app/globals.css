@@ -3,10 +3,21 @@
 /* Enable class-based dark mode for Tailwind v4 */
 @custom-variant dark (&:where(.dark, .dark *));
 
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* ── Brand accent — edit these to retheme the whole app ── */
+  --accent: oklch(68.1% 0.162 75.834);
+  /* primary warm amber                        */
+  --accent-dark: oklch(55% 0.162 75.834);
+  /* darker amber  (button, hover states)      */
+  --accent-darker: oklch(44% 0.162 75.834);
+  /* darkest amber (deep hover)                */
+  --accent-light: oklch(78% 0.13 75.834);
+  /* lighter amber (links, subtle highlights)  */
+  --accent-violet: oklch(45% 0.085 224.283);
+  /* slate-blue    (gradient complement / end) */
 }
 
 @theme inline {
@@ -14,13 +25,13 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-ebgaramond);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Accent color tokens — used as text-accent, bg-accent, etc. */
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-darker: var(--accent-darker);
+  --color-accent-light: var(--accent-light);
+  --color-accent-violet: var(--accent-violet);
 }
 
 body {
@@ -28,7 +39,8 @@ body {
   color: var(--foreground);
   font-family: var(--font-ebgaramond), Arial, Helvetica, sans-serif;
 }
+
 .dark {
-   background: var(--background);
-    color: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
 }

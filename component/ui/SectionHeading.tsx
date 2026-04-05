@@ -18,11 +18,11 @@ export default function SectionHeading({ title, subtitle }: Props) {
     >
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">{title}</h2>
       {subtitle && (
-        <p className="mt-2 text-sm md:text-base tracking-widest uppercase text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm md:text-base tracking-widest uppercase text-black dark:text-gray-400">
           {subtitle}
         </p>
       )}
-      <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-linear-to-r from-indigo-500 to-violet-500" />
+      <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-linear-to-r from-accent to-accent-violet" />
     </motion.div>
   );
 }
