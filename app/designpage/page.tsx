@@ -46,13 +46,14 @@ export default function DesignPage() {
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="text-center pt-16 pb-4 px-4"
+        className="text-center pt-16 pb-8 px-4"
       >
-        <h2 className="text-4xl font-bold">Designing Performance</h2>
-        <p className="mt-2 text-sm text-black dark:text-gray-400 tracking-widest uppercase">
+        <p className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-3">Portfolio</p>
+        <h2 className="text-5xl font-bold tracking-tight">Designing Performance</h2>
+        <p className="mt-3 text-sm text-black dark:text-gray-400 tracking-widest uppercase">
           Visual work &amp; UI designs
         </p>
-        <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-linear-to-r from-accent to-accent-violet" />
+        <div className="mx-auto mt-5 h-px w-24 bg-gradient-to-r from-transparent via-accent to-transparent" />
       </motion.div>
 
       <DesignImg />

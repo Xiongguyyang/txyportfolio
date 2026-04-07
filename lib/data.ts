@@ -76,4 +76,4 @@ export const PROJECT_FEATURES = [
   "Firebase Auth (Login / Logout)",
 ];
 
-export const DESIGN_IMAGES = ["/dsimg1.png"];
+export const DESIGN_IMAGES = ["/dsimg1.png", "/designimg2.png"];

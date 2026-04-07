@@ -1,21 +1,30 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import QRImage from "@/public/myQR.jpg";
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa6";
-import { AiOutlineDingding } from "react-icons/ai";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/data";
 import { BsFire } from "react-icons/bs";
 import { useTheme } from "@/component/ThemeProvider";
 
+const MORE_LINKS = [
+  { label: "Designing",        href: "/designpage" },
+  { label: "Experience Work",  href: "/experience" },
+  { label: "Activities",       href: "/activities" },
+  { label: "Volunteer",        href: "/volunteer" },
+];
+
 export default function Header() {
   const { pagemode, setPagemode } = useTheme();
   const [contactOpen, setContactOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const moreTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dark = pagemode === "dark";
 
   useEffect(() => {
@@ -68,13 +77,47 @@ export default function Header() {
               <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent rounded-full group-hover:w-full transition-all duration-300" />
             </motion.button>
           ))}
-          <Link
-            href="/designpage"
-            className="text-base font-medium relative group text-accent hover:text-accent-light transition-colors"
+          {/* More About Me dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => {
+              if (moreTimer.current) clearTimeout(moreTimer.current);
+              setMoreOpen(true);
+            }}
+            onMouseLeave={() => {
+              moreTimer.current = setTimeout(() => setMoreOpen(false), 120);
+            }}
           >
-            Design
-            <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent-light rounded-full group-hover:w-full transition-all duration-300" />
-          </Link>
+            <motion.button
+              whileHover={{ y: -2 }}
+              className="flex items-center gap-1 text-base font-medium text-accent hover:text-accent-light transition-colors"
+            >
+              More About Me
+              {moreOpen ? <FiChevronUp size={14} /> : <FiChevronDown size={14} />}
+            </motion.button>
+
+            <AnimatePresence>
+              {moreOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.97 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-xl overflow-hidden z-50"
+                >
+                  {MORE_LINKS.map(({ label, href }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      className="block px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-accent/10 hover:text-accent dark:hover:text-accent transition-colors"
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </nav>
 
         {/* Desktop actions */}
@@ -173,13 +216,38 @@ export default function Header() {
                   {label}
                 </button>
               ))}
-              <Link
-                href="/designpage"
-                onClick={() => setMobileOpen(false)}
-                className="text-lg font-medium py-3 border-b border-gray-100 dark:border-gray-800 text-accent hover:text-accent-light transition-colors"
-              >
-                Design
-              </Link>
+              {/* More About Me — mobile accordion */}
+              <div className="border-b border-gray-100 dark:border-gray-800">
+                <button
+                  onClick={() => setMobileMoreOpen((v) => !v)}
+                  className="w-full flex items-center justify-between text-left text-lg font-medium py-3 text-accent hover:text-accent-light transition-colors"
+                >
+                  More About Me
+                  {mobileMoreOpen ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
+                </button>
+                <AnimatePresence>
+                  {mobileMoreOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden pl-4 pb-2 flex flex-col gap-1"
+                    >
+                      {MORE_LINKS.map(({ label, href }) => (
+                        <Link
+                          key={href}
+                          href={href}
+                          onClick={() => setMobileOpen(false)}
+                          className="text-base font-medium py-2 text-gray-700 dark:text-gray-300 hover:text-accent dark:hover:text-accent transition-colors"
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <button
                 onClick={() => { setMobileOpen(false); setContactOpen(true); }}
                 className="mt-2 w-full py-2.5 rounded-full text-base font-semibold bg-accent-dark text-white hover:bg-accent-darker transition-colors"

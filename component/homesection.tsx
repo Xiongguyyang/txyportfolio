@@ -10,6 +10,7 @@ import SectionDivider from "@/component/ui/SectionDivider";
 import { fadeLeft, fadeRight, scaleIn, stagger } from "@/lib/variants";
 import { SOCIAL_LINKS } from "@/lib/data";
 import GalaxyCanvas from "@/component/GalaxyCanvas";
+import { useTheme } from "@/component/ThemeProvider";
 
 const iconMap = {
   facebook: IoLogoFacebook,
@@ -23,6 +24,8 @@ const iconStyle = {
 
 export default function HomeSection() {
   const [showImage, setShowImage] = useState(true);
+  const { pagemode } = useTheme();
+  const dark = pagemode === "dark";
 
   return (
     <section
@@ -124,16 +127,18 @@ export default function HomeSection() {
                 </button>
               </motion.div>
             ) : (
-              <motion.p
+              <motion.button
                 key="hint"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.3 }}
-                className="text-xs text-gray-500 text-center select-none pointer-events-none"
+                onClick={() => setShowImage(true)}
+                aria-label="Show photo"
+                className="px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/15 text-sm text-gray-300 hover:bg-accent/15 hover:border-accent/35 hover:text-accent transition-colors"
               >
-                🌍 click Earth to restore
-              </motion.p>
+                Show Photo
+              </motion.button>
             )}
           </AnimatePresence>
         </motion.div>

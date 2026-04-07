@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TXY Portfolio",
+  title: "Tou-Xiong's Portfolio",
   description: "tech portfolio",
-  icons: {icon: '/icon.jpg'},
+  icons: { icon: '/icon.jpg' },
 };
 
 export default function RootLayout({
